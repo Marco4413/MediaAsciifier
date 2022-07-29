@@ -28,10 +28,8 @@ const AsciifyFrame = (canvas, frame, brightnessTable, scaledWidth = 1000, sample
             const baseIndex = (imageData.width * y + x) * 4;
 
             let averageColor = 0, pixels = 0;
-            for (let sy = 0; sy < sampleSize; sy++) {
-                if (y + sy >= imageData.height) break;
-                for (let sx = 0; sx < sampleSize; sx++) {
-                    if (x + sx >= imageData.width) break;
+            for (let sy = 0; sy < sampleSize && y + sy < imageData.height; sy++) {
+                for (let sx = 0; sx < sampleSize && x + sx < imageData.width; sx++) {
                     pixels++;
 
                     const fullIndex = baseIndex + sampleSize * sy + sx;
@@ -43,7 +41,7 @@ const AsciifyFrame = (canvas, frame, brightnessTable, scaledWidth = 1000, sample
                 }
             }
 
-            if (pixels !== 0) averageColor /= pixels;
+            if (pixels > 0) averageColor /= pixels;
             const asciiChar = brightnessTable[
                 Math.round((1 - averageColor / 255) * (brightnessTable.length - 1))
             ];
