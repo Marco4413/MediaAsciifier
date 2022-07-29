@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta property="og:title" content="Media Asciifier">
+    <meta property="og:description" content="A media to char converter.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://Marco4413.github.io/MediaAsciifier/">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Marco4413/MediaAsciifier/master/preview.png">
+
+    <meta property="twitter:title" content="Media Asciifier">
+    <meta property="twitter:description" content="A media to char converter.">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="https://raw.githubusercontent.com/Marco4413/MediaAsciifier/master/preview.png">
+
+    <link rel="icon" href="https://raw.githubusercontent.com/Marco4413/MediaAsciifier/master/preview.png">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Asciifier</title>
+    <script src="./script.js"></script>
+
+    <style>
+        #output-ascii {
+            font-size: 8pt;
+            color: gainsboro;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        * {
+            padding: 2.5px !important;
+        }
+
+        ol, li {
+            margin-left: 20px !important;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="https://Marco4413.github.io/common/style.css">
+    <script src="https://Marco4413.github.io/common/copyright.js" class="no-background" url="https://github.com/Marco4413/MediaAsciifier" name="Marco4413" year="2022"></script>
+</head>
+<body class="darktheme">
+    <div>
+        <div>
+            Notes:
+            <ol type="1">
+                <li>GIFs don't work, use videos instead.</li>
+                <li>If a video takes too long to process the output will stop updating real-time with the video.</li>
+                <li>You can seek through a video to get a specific frame.</li>
+                <li>Changing any output setting (Except for font size) will update the output to the current frame.</li>
+                <li>The output width in chars is the Scaled Output Width divided by the Output Sample Size.</li>
+            </ol>
+        </div>
+        <label for="source-media">Source Media:</label>
+        <input type="file" id="source-media" accept="image/*,video/*">
+        <br>
+        <label for="output-scaled-width">Scaled Output Width:</label>
+        <input type="number" id="output-scaled-width" value="1000">
+        <br>
+        <label for="output-sample-size">Output Sample Size:</label>
+        <input type="number" id="output-sample-size" value="4">
+        <br>
+        <label for="output-font-size">Output Font Size:</label>
+        <input type="text" id="output-font-size" value="4pt">
+        <br>
+        <label for="brightness-table">Brightness Table:</label>
+        <input type="text" id="brightness-table" value="█▓▒░▌">
+        <div>
+            Recommended Brightness Tables:
+            <ol type="1">
+                <li>█▓▒░▌</li>
+                <li>$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'.</li>
+            </ol>
+        </div>
+    </div>
+    <div>
+        Input:
+        <div>
+            <video class="hidden" id="input-video" controls autoplay loop></video>
+            <image id="input-image">
+        </div>
+    </div>
+    <br> <!-- Adds some margin between Input and Output -->
+    <div>
+        Output:
+        <div id="output-ascii"></div>
+    </div>
+    <br> <!-- No awful copyright watermark in front of the Output :) -->
+    <br>
+    <br>
+</body>
+</html>
