@@ -37,6 +37,14 @@
         ol, li {
             margin-left: 20px !important;
         }
+
+        li > pre {
+            border: solid gray 1px;
+            border-radius: 6pt;
+            padding: 4pt !important;
+            width: fit-content;
+            overflow: hidden;
+        }
     </style>
     
     <link rel="stylesheet" href="https://Marco4413.github.io/common/style.css">
@@ -54,25 +62,34 @@
                 <li>The output width in chars is the Scaled Output Width divided by the Output Sample Size.</li>
             </ol>
         </div>
-        <label for="source-media">Source Media:</label>
-        <input type="file" id="source-media" accept="image/*,video/*">
-        <br>
-        <label for="output-scaled-width">Scaled Output Width:</label>
-        <input type="number" id="output-scaled-width" value="1000">
-        <br>
-        <label for="output-sample-size">Output Sample Size:</label>
-        <input type="number" id="output-sample-size" value="4">
-        <br>
-        <label for="output-font-size">Output Font Size:</label>
-        <input type="text" id="output-font-size" value="4pt">
-        <br>
-        <label for="brightness-table">Brightness Table:</label>
-        <input type="text" id="brightness-table" value="█▓▒░▌">
+        <table>
+            <tr>
+                <td><label for="source-media">Source Media:</label></td>
+                <td><input type="file" id="source-media" accept="image/*,video/*"></td>
+            </tr>
+            <tr>
+                <td><label for="output-scaled-width">Scaled Output Width:</label></td>
+                <td><input type="number" id="output-scaled-width" value="1000"></td>
+            </tr>
+            <tr>
+                <td><label for="output-sample-size">Output Sample Size:</label></td>
+                <td><input type="number" id="output-sample-size" value="4"></td>
+            </tr>
+            <tr>
+                <td><label for="output-font-size">Output Font Size:</label></td>
+                <td><input type="text" id="output-font-size" value="4pt"></td>
+            </tr>
+            <tr>
+                <td><label for="brightness-table">Brightness Table:</label></td>
+                <td><input type="text" id="brightness-table" value="█▓▒░▌"></td>
+            </tr>
+        </table>
         <div>
             Recommended Brightness Tables:
             <ol type="1">
-                <li>█▓▒░▌</li>
-                <li>$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`'.</li>
+                <li><pre>█▓▒░▌</pre></li>
+                <li><pre>█▓▒▒░░▌    </pre></li>
+                <li><pre>Ñ@#W$9876543210?!abc;:+=-,._                    </pre></li>
             </ol>
         </div>
     </div>
