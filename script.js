@@ -84,6 +84,10 @@ window.addEventListener("load", () => {
         newMedia = true, slowMedia = false;
     });
 
+    inputVideo.addEventListener("play", () => {
+        newMedia = true, slowMedia = false;
+    });
+
     let brightnessTable = "";
     AddChangeEventListener(
         document.getElementById("brightness-table"),
