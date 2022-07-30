@@ -78,20 +78,41 @@ window.addEventListener("load", () => {
     /** @type {HTMLImageElement|HTMLVideoElement} */
     let srcMedia = null, newMedia = true, slowMedia = false;
 
+    /** @type {HTMLSpanElement} */
+    const slowMediaFlag = document.getElementById("slow-media-flag");
+    const FlagMedia = (_newMedia = true, _slowMedia = false) => {
+        if (_slowMedia !== slowMedia) slowMediaFlag.innerText = _slowMedia ? "🟠 Media is slow." : "🟢";
+        newMedia = _newMedia;
+        slowMedia = _slowMedia;
+    };
+
+    FlagMedia();
+
     inputVideo.addEventListener("seeked", () => {
-        newMedia = true, slowMedia = false;
+        FlagMedia();
     });
 
     inputVideo.addEventListener("play", () => {
-        newMedia = true, slowMedia = false;
+        FlagMedia();
     });
+
+    let slowMediaTime = 0;
+    AddChangeEventListener(
+        document.getElementById("slow-media-time"),
+        el => {
+            if (Number.isNaN(el.valueAsNumber) || el.valueAsNumber <= 0)
+                el.value = "1";
+            slowMediaTime = el.valueAsNumber * 1e3;
+            FlagMedia();
+        }
+    )
 
     let brightnessTable = "";
     AddChangeEventListener(
         document.getElementById("brightness-table"),
         el => {
             brightnessTable = el.value;
-            newMedia = true, slowMedia = false;
+            FlagMedia();
         }
     );
 
@@ -99,9 +120,10 @@ window.addEventListener("load", () => {
     AddChangeEventListener(
         document.getElementById("output-scaled-width"),
         el => {
-            scaledWidth = (Number.isNaN(el.valueAsNumber) || el.valueAsNumber <= 0) ?
-                200 : el.valueAsNumber;
-            newMedia = true, slowMedia = false;
+            if (Number.isNaN(el.valueAsNumber) || el.valueAsNumber <= 0)
+                el.value = "1";
+            scaledWidth = el.valueAsNumber;
+            FlagMedia();
         }
     );
 
@@ -109,9 +131,10 @@ window.addEventListener("load", () => {
     AddChangeEventListener(
         document.getElementById("output-sample-size"),
         el => {
-            sampleSize = (Number.isNaN(el.valueAsNumber) || el.valueAsNumber <= 0) ?
-                4 : el.valueAsNumber;
-            newMedia = true, slowMedia = false;
+            if (Number.isNaN(el.valueAsNumber) || el.valueAsNumber <= 0)
+                el.value = "1";
+            sampleSize = el.valueAsNumber;
+            FlagMedia();
         }
     );
 
@@ -135,7 +158,7 @@ window.addEventListener("load", () => {
             inputVideo.src = result;
             srcMedia = inputVideo;
         }
-        newMedia = true, slowMedia = false;
+        FlagMedia();
     });
 
     /** @type {HTMLInputElement} */
@@ -147,7 +170,7 @@ window.addEventListener("load", () => {
     });
 
     let lastFrameTime = Date.now();
-    const updateImage = () => {
+    const UpdateOutput = () => {
         const currentFrameTime = Date.now();
         if (srcMedia != null && (!slowMedia) && (newMedia || srcMedia.tagName === "VIDEO" && !srcMedia.paused)) {
             outputAscii.innerText = AsciifyFrame(
@@ -159,13 +182,13 @@ window.addEventListener("load", () => {
             if (newMedia) newMedia = false;
 
             const deltaTime = currentFrameTime - lastFrameTime;
-            slowMedia = deltaTime > 2.5e3
+            FlagMedia(false, deltaTime > slowMediaTime);
             if (slowMedia) console.warn(`WARN: Media is slow to process, a single frame took ${deltaTime}ms, stopping any loop.`)
         }
 
         lastFrameTime = currentFrameTime;
-        requestAnimationFrame(updateImage);
+        requestAnimationFrame(UpdateOutput);
     };
 
-    updateImage();
+    UpdateOutput();
 });
