@@ -175,11 +175,17 @@ window.addEventListener("load", () => {
         SetMedia(result, result.startsWith("data:image"));
     });
 
+    /** @type {HTMLLabelElement} */
+    const sourceFileLabel = document.getElementById("source-media-label");
     /** @type {HTMLInputElement} */
     const sourceFilePicker = document.getElementById("source-media");
     sourceFilePicker.addEventListener("input", ev => {
         const files = ev.target.files;
-        if (files == null || files[0] == null) return;
+        if (files == null || files[0] == null) {
+            sourceFileLabel.innerText = "Pick File";
+            return;
+        }
+        sourceFileLabel.innerText = `File: ${files[0].name}`;
         mediaReader.readAsDataURL(files[0]);
     });
 
@@ -191,7 +197,7 @@ window.addEventListener("load", () => {
             if (track != null) track.stop();
         } currentMediaStream = stream;
         
-        sourceFilePicker.value = null;
+        sourceFileLabel.innerText = "Pick File";
         if (stream != null) {
             const track = currentMediaStream.getVideoTracks()[0];
             if (track != null) track.addEventListener("ended", () => {

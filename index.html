@@ -20,9 +20,9 @@
     <title>Media Asciifier</title>
     <script src="./script.js"></script>
 
-    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://Marco4413.github.io/common/style.css">
     <script src="https://Marco4413.github.io/common/copyright.js" class="no-background" url="https://github.com/Marco4413/MediaAsciifier" name="Marco4413" year="2022"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body class="darktheme">
     <div>
@@ -40,9 +40,10 @@
             <tr>
                 <td><label for="source-media">Source Media:</label></td>
                 <td>
-                    <input type="file" id="source-media" accept="image/*,video/*">
-                    <input type="button" id="screen-capture" value="Screen Capture">
-                    <input type="button" id="webcam-capture" value="Webcam Capture">
+                    <label class="button" for="source-media" id="source-media-label">Pick File</label>
+                    <input class="hidden" type="file" id="source-media" accept="image/*,video/*">
+                    <input class="button" type="button" id="screen-capture" value="Screen Capture">
+                    <input class="button" type="button" id="webcam-capture" value="Webcam Capture">
                 </td>
             </tr>
             <tr>
