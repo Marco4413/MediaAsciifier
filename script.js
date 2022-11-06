@@ -86,6 +86,10 @@ window.addEventListener("load", () => {
         slowMedia = _slowMedia;
     };
 
+    slowMediaFlag.addEventListener("click", () => {
+        FlagMedia(false, false);
+    });
+
     /** @param {Object} source */
     const SetMedia = (source, isImage = true) => {
         if (isImage) {

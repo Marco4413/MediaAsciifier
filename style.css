@@ -3,6 +3,10 @@
     color: gainsboro;
 }
 
+#slow-media-flag:hover {
+    cursor: pointer;
+}
+
 .hidden {
     display: none;
 }
