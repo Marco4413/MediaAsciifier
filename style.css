@@ -1,0 +1,38 @@
+#output-ascii {
+    font-size: 8pt;
+    color: gainsboro;
+}
+
+.hidden {
+    display: none;
+}
+
+* {
+    padding: 2.5px !important;
+}
+
+ol, li {
+    margin-left: 20px !important;
+}
+
+li > pre {
+    border: solid gray 1px;
+    border-radius: 6pt;
+    padding: 4pt !important;
+    width: fit-content;
+    overflow: hidden;
+}
+
+input[type="button"] {
+    background-color: #333;
+    border: solid #111 1px;
+    border-radius: 5px;
+    padding: 5px !important;
+    margin: 1px !important;
+}
+
+input[type="button"]:hover {
+    background-color: #444;
+    padding: 6px !important;
+    margin: 0px !important;
+}

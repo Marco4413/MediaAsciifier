@@ -86,6 +86,28 @@ window.addEventListener("load", () => {
         slowMedia = _slowMedia;
     };
 
+    /** @param {Object} source */
+    const SetMedia = (source, isImage = true) => {
+        if (isImage) {
+            inputImage.classList.remove("hidden");
+            inputVideo.classList.add("hidden");
+            inputVideo.pause();
+            inputImage.src = source;
+            srcMedia = inputImage;
+        } else {
+            inputImage.classList.add("hidden");
+            inputVideo.classList.remove("hidden");
+            if (typeof source === "string") {
+                inputVideo.src = source;
+                inputVideo.srcObject = null;
+            } else {
+                inputVideo.src = "";
+                inputVideo.srcObject = source;
+            }
+            srcMedia = inputVideo;
+        } FlagMedia();
+    };
+
     FlagMedia();
 
     inputVideo.addEventListener("seeked", () => {
@@ -105,7 +127,7 @@ window.addEventListener("load", () => {
             slowMediaTime = el.valueAsNumber * 1e3;
             FlagMedia();
         }
-    )
+    );
 
     let brightnessTable = "";
     AddChangeEventListener(
@@ -146,27 +168,47 @@ window.addEventListener("load", () => {
     const mediaReader = new FileReader();
     mediaReader.addEventListener("load", ev => {
         const result = ev.target.result;
-        if (result.startsWith("data:image")) {
-            inputImage.classList.remove("hidden");
-            inputVideo.classList.add("hidden");
-            inputVideo.pause();
-            inputImage.src = result;
-            srcMedia = inputImage;
-        } else {
-            inputImage.classList.add("hidden");
-            inputVideo.classList.remove("hidden");
-            inputVideo.src = result;
-            srcMedia = inputVideo;
-        }
-        FlagMedia();
+        SetMedia(result, result.startsWith("data:image"));
     });
 
     /** @type {HTMLInputElement} */
-    const sourceImagePicker = document.getElementById("source-media");
-    sourceImagePicker.addEventListener("input", ev => {
+    const sourceFilePicker = document.getElementById("source-media");
+    sourceFilePicker.addEventListener("input", ev => {
         const files = ev.target.files;
         if (files == null || files[0] == null) return;
         mediaReader.readAsDataURL(files[0]);
+    });
+
+    /** @type {MediaStream} */
+    let currentMediaStream = null;
+    const SetMediaStream = stream => {
+        if (currentMediaStream != null) {
+            const track = currentMediaStream.getVideoTracks()[0];
+            if (track != null) track.stop();
+        } currentMediaStream = stream;
+        
+        sourceFilePicker.value = null;
+        if (stream != null) {
+            const track = currentMediaStream.getVideoTracks()[0];
+            if (track != null) track.addEventListener("ended", () => {
+                currentMediaStream = null;
+                SetMedia(null, false);
+            });
+        }
+        
+        SetMedia(stream, false);
+    };
+
+    /** @type {HTMLButtonElement} */
+    const screenCapture = document.getElementById("screen-capture");
+    screenCapture.addEventListener("click", async () => {
+        SetMediaStream(await navigator.mediaDevices.getDisplayMedia({ "audio": false, "video": true }));
+    });
+
+    /** @type {HTMLButtonElement} */
+    const webcamCapture = document.getElementById("webcam-capture");
+    webcamCapture.addEventListener("click", async () => {
+        SetMediaStream(await navigator.mediaDevices.getUserMedia({ "audio": false, "video": true }));
     });
 
     let lastFrameTime = Date.now();
