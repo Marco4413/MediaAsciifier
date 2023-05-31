@@ -11,14 +11,6 @@
     display: none;
 }
 
-* {
-    padding: 2.5px !important;
-}
-
-ol, li {
-    margin-left: 20px !important;
-}
-
 li > pre {
     border: solid gray 1px;
     border-radius: 6pt;
@@ -27,17 +19,6 @@ li > pre {
     overflow: hidden;
 }
 
-.button {
-    font-size: 10pt;
-    background-color: #333;
-    border: solid #111 1px;
-    border-radius: 5px;
-    padding: 5px !important;
-    margin: 1px !important;
-}
-
-.button:hover {
-    background-color: #444;
-    padding: 6px !important;
-    margin: 0px !important;
+table td, table th {
+    border: hidden;
 }
