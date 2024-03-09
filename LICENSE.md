@@ -1,4 +1,4 @@
-Copyright (c) 2023 [Marco4413](https://github.com/Marco4413/MediaAsciifier)
+Copyright (c) 2024 [Marco4413](https://github.com/Marco4413/MediaAsciifier)
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
