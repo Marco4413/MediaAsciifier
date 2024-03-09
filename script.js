@@ -169,12 +169,8 @@ window.addEventListener("load", () => {
         el => outputAscii.style.fontSize = el.value
     );
 
-    const mediaReader = new FileReader();
-    mediaReader.addEventListener("load", ev => {
-        const result = ev.target.result;
-        SetMedia(result, result.startsWith("data:image"));
-    });
-
+    /** @type {FileReader?} */
+    let mediaReader = null;
     /** @type {HTMLLabelElement} */
     const sourceFileLabel = document.getElementById("source-media-label");
     /** @type {HTMLInputElement} */
@@ -186,6 +182,14 @@ window.addEventListener("load", () => {
             return;
         }
         sourceFileLabel.innerText = `File: ${files[0].name}`;
+
+        if (mediaReader)
+            mediaReader.abort();
+        mediaReader = new FileReader();
+        mediaReader.addEventListener("loadend", ev => {
+            const result = ev.target.result;
+            SetMedia(result, result.startsWith("data:image"));
+        });
         mediaReader.readAsDataURL(files[0]);
     });
 
