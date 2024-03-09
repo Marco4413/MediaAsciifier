@@ -181,13 +181,19 @@ window.addEventListener("load", () => {
             sourceFileLabel.innerText = "Pick File";
             return;
         }
-        sourceFileLabel.innerText = `File: ${files[0].name}`;
+
+        const fileName = files[0].name;
+        sourceFileLabel.innerText = `File: ${fileName}`;
 
         if (mediaReader)
             mediaReader.abort();
         mediaReader = new FileReader();
         mediaReader.addEventListener("loadend", ev => {
             const result = ev.target.result;
+            if (result == null) {
+                console.warn(`WARN: Loading of file '${fileName}' either failed or was stopped.`);
+                return;
+            }
             SetMedia(result, result.startsWith("data:image"));
         });
         mediaReader.readAsDataURL(files[0]);
