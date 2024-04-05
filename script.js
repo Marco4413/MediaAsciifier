@@ -1,6 +1,6 @@
 
 /**
- * @param {HTMLCanvasElement} canvas
+ * @param {OffscreenCanvas} canvas
  * @param {HTMLImageElement|HTMLVideoElement} frame
  * @param {String} brightnessTable
  * @param {Number} scaledWidth
@@ -73,7 +73,7 @@ window.addEventListener("load", () => {
     const inputVideo = document.getElementById("input-video");
     
     const outputAscii = document.getElementById("output-ascii");
-    const canvas = document.createElement("canvas");
+    const canvas = new OffscreenCanvas(0, 0);
     
     /** @type {HTMLImageElement|HTMLVideoElement} */
     let srcMedia = null, newMedia = true, slowMedia = false;
