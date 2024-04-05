@@ -10,7 +10,7 @@ const AsciifyFrame = (canvas, frame, brightnessTable, scaledWidth = 1000, sample
     let frameWidth, frameHeight;
     if (frame.tagName === "VIDEO")
         frameWidth = frame.videoWidth, frameHeight = frame.videoHeight;
-    else frameWidth = frame.width, frameHeight = frame.height;
+    else frameWidth = frame.naturalWidth, frameHeight = frame.naturalHeight;
     if (frameWidth <= 0 || frameHeight <= 0) return "Warning: Invalid Input Size.";
 
     const aspectRatio = frameHeight / frameWidth;
