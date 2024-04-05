@@ -122,10 +122,18 @@ window.addEventListener("load", () => {
                 inputVideo.srcObject = source;
             }
             srcMedia = inputVideo;
-        } FlagMedia();
+        }
     };
 
-    FlagMedia();
+    inputImage.addEventListener("load", () => {
+        if (srcMedia === inputImage)
+            FlagMedia();
+    });
+
+    inputVideo.addEventListener("load", () => {
+        if (srcMedia === inputVideo)
+            FlagMedia();
+    });
 
     inputVideo.addEventListener("seeked", () => {
         FlagMedia();
