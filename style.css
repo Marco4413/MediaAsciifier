@@ -1,3 +1,8 @@
+#input-video, #input-image {
+    min-width: 25%;
+    max-width: 75%;
+}
+
 #output-ascii {
     font-size: 8pt;
     color: gainsboro;
