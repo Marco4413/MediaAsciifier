@@ -90,15 +90,28 @@ window.addEventListener("load", () => {
         FlagMedia(false, false);
     });
 
-    /** @param {Object} source */
+    /** @param {string|MediaProvider|Blob} source */
     const SetMedia = (source, isImage = true) => {
+        if (source instanceof Blob) {
+            source = URL.createObjectURL(source);
+            console.log(`Created object URL '${source}'.`);
+        }
+
         if (isImage) {
+            if (inputImage.src.startsWith("blob:")) {
+                URL.revokeObjectURL(inputImage.src);
+                console.log(`Freed object URL '${inputImage.src}'.`);
+            }
             inputImage.classList.remove("hidden");
             inputVideo.classList.add("hidden");
             inputVideo.pause();
             inputImage.src = source;
             srcMedia = inputImage;
         } else {
+            if (inputVideo.src.startsWith("blob:")) {
+                URL.revokeObjectURL(inputVideo.src);
+                console.log(`Freed object URL '${inputVideo.src}'.`);
+            }
             inputImage.classList.add("hidden");
             inputVideo.classList.remove("hidden");
             if (typeof source === "string") {
@@ -169,8 +182,8 @@ window.addEventListener("load", () => {
         el => outputAscii.style.fontSize = el.value
     );
 
-    /** @type {FileReader?} */
-    let mediaReader = null;
+    // /** @type {FileReader?} */
+    // let mediaReader = null;
     /** @type {HTMLLabelElement} */
     const sourceFileLabel = document.getElementById("source-media-label");
     /** @type {HTMLInputElement} */
@@ -185,18 +198,20 @@ window.addEventListener("load", () => {
         const fileName = files[0].name;
         sourceFileLabel.innerText = `File: ${fileName}`;
 
-        if (mediaReader)
-            mediaReader.abort();
-        mediaReader = new FileReader();
-        mediaReader.addEventListener("loadend", ev => {
-            const result = ev.target.result;
-            if (result == null) {
-                console.warn(`WARN: Loading of file '${fileName}' either failed or was stopped.`);
-                return;
-            }
-            SetMedia(result, result.startsWith("data:image"));
-        });
-        mediaReader.readAsDataURL(files[0]);
+        SetMedia(files[0], files[0].type.startsWith("image"));
+
+        // if (mediaReader)
+        //     mediaReader.abort();
+        // mediaReader = new FileReader();
+        // mediaReader.addEventListener("loadend", ev => {
+        //     const result = ev.target.result;
+        //     if (result == null) {
+        //         console.warn(`WARN: Loading of file '${fileName}' either failed or was stopped.`);
+        //         return;
+        //     }
+        //     SetMedia(result, result.startsWith("data:image"));
+        // });
+        // mediaReader.readAsDataURL(files[0]);
     });
 
     /** @type {MediaStream} */
